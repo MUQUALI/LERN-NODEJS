@@ -1,0 +1,16 @@
+extends ../layouts/common
+
+block content
+	h1 Login
+		if errs
+			each err in errs
+				.alert.alert-danger(role='alert')= err
+
+		form#loginForm(method="POST")
+			.form-group
+				label(for='email') Email
+				input#email.form-control(type='text', placeholder='Email' name="email", value=values ? values.email : '')
+			.form-group
+				label(for='password') Password
+				input#password.form-control(type='text', placeholder='Password' name="password", value=values ? values.password : '')
+			button.btn.btn-primary(type='submit') Login

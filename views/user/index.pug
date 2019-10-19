@@ -1,0 +1,30 @@
+extends ../layouts/common
+
+block content
+	h1 USER
+	
+	p= user ? user.name : ''
+
+		form(action='/users/search' method="GET" class="col-md-4 d-flex")
+			input(type="text" name="q" class='form-control')
+			button(class='btn btn-primary') search
+
+		table.table
+			thead.thead-dark
+				tr
+					th(scope='col') Avatar
+					th(scope='col') Name
+					th(scope='col') Phone
+					th(scope='col') Detail
+			tbody
+				each user in users
+					tr
+						td
+							img(src=user.avartar, width=75)
+						td= user.name
+						td= user.phone
+						td
+							a(href='/users/' + user.id) VIEW
+
+
+	a(href="/users/create") create user	

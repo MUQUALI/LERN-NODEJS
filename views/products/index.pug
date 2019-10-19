@@ -1,0 +1,43 @@
+extends ../layouts/common
+
+block content
+  .row-mb-3
+    p= cart ? cart : 0
+  .row.mb-3
+    each product in products
+      .col-md-3
+        h3= product.name
+        img(src=product.image, alt='product', style='width:200px; height:200px')
+        br
+        p= product.description
+        p price : #{product.price}
+        a.btn.btn-primary(href='/cart/add/' + product.id) Add to cart
+
+  nav(aria-label='Page navigation example')
+    ul#paging.pagination
+  script(type='text/javascript').
+    var pagination = document.getElementById('paging');
+    var pageSize = 3;
+    var totalPage= #{totalPages};
+
+    var startPage = Math.max(1, Math.ceil(#{curentPage} - pageSize / 2));
+    
+    var endPage = Math.min(totalPage, Math.ceil(#{curentPage} + pageSize / 2));
+
+    function renderPage(start, end) {
+        var pageLinks = [];
+        for(i=start; i<=end; i++) {
+        pageLinks.push(i)
+        }
+        pageLinks = pageLinks.map(function(i){
+        	if(i === parseInt(#{curentPage})) {
+        		return '<li class="page-item active"><a class="page-link" href="products?page='+i+'">'+i +'</a></li>'
+        	}
+        	return '<li class="page-item"><a class="page-link" href="products?page='+i+'">'+i +'</a></li>'
+        })
+        pagination.innerHTML = pageLinks.join('')     
+    }
+
+    renderPage(startPage, endPage)
+
+
